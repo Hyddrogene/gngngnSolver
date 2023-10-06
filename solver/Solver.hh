@@ -7,12 +7,14 @@ typedef unsigned int u32;
 
 class CSPSolver {
 public:
-    std::vector<Variable> variables;
+    std::vector<Variable*> variables;
     std::vector<Constraint*> constraints;
 
     // Méthode pour ajouter une variable au CSP
-    void addVariable(int id, const std::vector<int>& domain) {
-        variables.emplace_back(id, domain);
+    Variable* addVariable(int id, const std::vector<int>& domain) {
+        Variable* v = new Variable(id,domain);
+        variables.push_back(v);
+        return v;
     }
 
     // Méthode pour ajouter une contrainte au CSP

@@ -7,9 +7,9 @@ bool CSPSolver::backtrack(std::vector<int>& assignment, u32 varIndex) {
         return true;
     }
 
-    Variable& currentVar = variables[varIndex];
+    Variable* currentVar = variables[varIndex];
 
-    for (int value : currentVar.domain) {
+    for (int value : currentVar->domain) {
         assignment[varIndex] = value;
         if (isConsistent(assignment, varIndex)) {
             if (backtrack(assignment, varIndex + 1)) {

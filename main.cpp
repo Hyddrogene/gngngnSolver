@@ -8,13 +8,15 @@ int main()
         CSPSolver solver;
 
         // Ajouter des variables avec leurs domaines
-        solver.addVariable(0, {1, 2, 3});
-        solver.addVariable(1, {1, 2});
-        solver.addVariable(2, {2, 3});
+        std::vector<Variable*> tmp = std::vector<Variable*>();
+        Variable* v1 = solver.addVariable(0, {1, 2, 3});
+        Variable* v2 =solver.addVariable(1, {1, 2});
+        Variable* v3 =solver.addVariable(2, {2, 3});
 
+        tmp.push_back(v1);tmp.push_back(v2);tmp.push_back(v3);
         // Créer une contrainte personnalisée (AllDifferent)
-        std::vector<Variable*> allDiffVariables = {&solver.variables[0], &solver.variables[1]};
-        AllDifferent allDiffConstraint(allDiffVariables);
+        //std::vector<Variable*> allDiffVariables = {&solver.variables[0], &solver.variables[1]};
+        AllDifferent allDiffConstraint(tmp);
 
         // Ajouter la contrainte au CSP
         solver.addConstraint(&allDiffConstraint);
@@ -24,8 +26,8 @@ int main()
 
         if (solutionFound) {
             std::cout << "Solution trouvée : ";
-            for (int value : solver.variables[0].domain) {
-                std::cout << "Variable 0 : " << value << ", ";
+            for (Variable* value : solver.variables) {
+                std::cout << "Variable : " << value->toString() << ", ";
             }
             std::cout << std::endl;
         } else {
